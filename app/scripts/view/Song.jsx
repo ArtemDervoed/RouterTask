@@ -6,14 +6,18 @@ import SongProp from './SongProp';
 import {removeSong} from '../actions/actions';
 import * as changeProperty from '../actions/changeProperty';
 import * as API from '../API';
+import {Link} from 'react-router';
 
 class Song extends React.Component {
+  componentWillMount() {
+    console.log(this.props.id);
+
+  }
   removeThisSong(event) {
     this.props.dispatch(removeSong(this.props.songId));
     API.removeData(this.props.songId);
   }
   applyNewPlayer(newPlayer) {
-    console.log(this);
     this.dispatch(changeProperty.changePropertyPlayer(this.songId, newPlayer));
     API.setPlayer(this.songId, newPlayer);
   }
@@ -52,6 +56,7 @@ class Song extends React.Component {
           header="Дата релиза"
           value={this.props.reliseDate}
           applyProps={this.applyNewDate}/>
+        <button><Link to={`/items/${this.props.songId}`}>Song</Link></button>
         <button onClick={this.removeThisSong.bind(this)}>Удалить</button>
       </section>
     );
